@@ -1,6 +1,6 @@
 /*
 
-Problem statement.
+Problem statement
 
 You are given a string s of lowercase English letters and an integer array shifts of the same length.
 
@@ -12,7 +12,6 @@ Now for each shifts[i] = x, we want to shift the first i + 1 letters of s, x tim
 Return the final string after all such shifts to s are applied.
 
  
-
 Example 1:
 
 Input: s = "abc", shifts = [3,5,9]
