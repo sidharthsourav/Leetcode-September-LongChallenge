@@ -59,13 +59,19 @@ bool PlusVerifier(int x,int y,int PlusSize,vector <vector<int>>& grid)
 }
 int orderOfLargestPlusSign(int n, vector<vector<int>>& mines)
 {
-    if(n<=2) return 0;  // if grid is lesser than 3 it's not possible to form a minimum plus which height is 3 
     // Grid initializing with all one's.
     vector<vector<int>> grid(n,vector<int>(n,1));
 
     // Editing zero's in the grid.
     for(int i=0;i<mines.size();i++)  grid[mines[i][0]][mines[i][1]]=0;
 
+    if(n<=2)
+    {
+        for(int i=0;i<grid.size();i++)
+            for(int j=0;j<grid.size();j++)
+                if(grid[i][j]==1) return 1;
+        return 0;        
+    }
     //Starting to point to search plus exist or not.
     int MaximumPlus=n;
     if(MaximumPlus%2==0) MaximumPlus=MaximumPlus-1;
@@ -79,14 +85,17 @@ int orderOfLargestPlusSign(int n, vector<vector<int>>& mines)
                 if (verify==true) return MaximumPlus/2 +1;
             }
     }
+    for(int i=0;i<grid.size();i++)
+            for(int j=0;j<grid.size();j++)
+                if(grid[i][j]==1) return 1;
     return 0;
 
 }
 
 int main()
 {
-    vector <vector<int>> mines={{4,2}};
-    int x=orderOfLargestPlusSign(5,mines);
+    vector <vector<int>> mines={{0,0},{0,1},{1,0}};
+    int x=orderOfLargestPlusSign(2,mines);
     cout<<x;
 }
 
