@@ -2,11 +2,14 @@
 
 Problem Statement.
 
-You are given an integer n. You have an n x n binary grid grid with all values initially 1's except for some indices given in the array mines. The ith element of the array mines is defined as mines[i] = [xi, yi] where grid[xi][yi] == 0.
+You are given an integer n. You have an n x n binary grid grid with all values initially 1's except 
+for some indices given in the array mines. The ith element of the array mines is defined as mines[i] = [xi, yi] 
+where grid[xi][yi] == 0.
 
 Return the order of the largest axis-aligned plus sign of 1's contained in grid. If there is none, return 0.
 
-An axis-aligned plus sign of 1's of order k has some center grid[r][c] == 1 along with four arms of length k - 1 going up, down, left, and right, and made of 1's. Note that there could be 0's or 1's beyond the arms of the plus sign, only the relevant area of the plus sign is checked for 1's.
+An axis-aligned plus sign of 1's of order k has some center grid[r][c] == 1 along with four arms of 
+length k - 1 going up, down, left, and right, and made of 1's. Note that there could be 0's or 1's beyond the arms of the plus sign, only the relevant area of the plus sign is checked for 1's.
 
 NOTE: Refer to the image provided on the leetcode site for more explanation.
 
@@ -39,32 +42,78 @@ using namespace std;
 
 typedef long long ll;
 
+bool PlusVerifier(int x,int y,int PlusSize,vector <vector<int>>& grid)
+{
+    bool up=true,down=true,left=true,right=true;
+    cout<<"Entering plusverifier function."<<x<<" "<<y<<" "<<" "<<PlusSize<<endl;
+    for(int i=x;i<=x+PlusSize;i++) 
+    {
+
+        if(grid[i][y]==0) down=false;
+        
+    }
+        
+    cout<<"Loop one executed."<<endl;
+    for(int i=x;i>x-PlusSize;i--)
+    {
+        if(grid[i][y]==0) up=false;
+
+    }
+    cout<<"Loop two executed."<<endl;    
+    for(int j=y;j<=y+PlusSize;j++)
+        if(grid[x][j]==0) right=false;
+    cout<<"Loop three executed."<<endl;    
+    for(int j=y;j>=y-PlusSize;j--)
+        if(grid[x][j]==0) left=false;
+    cout<<"Loop four executed."<<endl;
+    
+    cout<<" Plus verifier has been called and runed all loops."<<endl;
+    return (up && down) && ( left && right);
+    
+}
 int orderOfLargestPlusSign(int n, vector<vector<int>>& mines)
 {
     if(n<=2) return 0;  // if grid is lesser than 3 it's not possible to form a minimum plus which height is 3 
-
-    int grid[n-1][n-1];
+    cout<<" function has been called."<<endl;
     // Grid initializing with all one's.
-    for(int i=0;i<n;i++)
-        for(int j=0;j<n;j++)  grid[i][j]=1;  
+    vector<vector<int>> grid(n,vector<int>(n,1));
 
     // Editing zero's in the grid.
     for(int i=0;i<mines.size();i++)  grid[mines[i][0]][mines[i][1]]=0;
-    
+
+    for(int i=0;i<n;i++)
+    {
+        for(int j=0;j<n;j++)
+        {
+            cout<<grid[i][j]<<" ";
+        }
+        cout<<endl;
+    }
     //Starting to point to search plus exist or not.
     int MaximumPlus=n;
-    if(MaximumPlus%2==0) MaximumPlus-=1;
-    for(MaximumPlus;MaximumPlus>=3;MaximumPlus-=2) //this loops is resopnsible for the maximum plus 
+    if(MaximumPlus%2==0) MaximumPlus=MaximumPlus-1;
+    bool result=false;
+    for(MaximumPlus;MaximumPlus>=3;MaximumPlus=MaximumPlus-2) //this loops is resopnsible for the maximum plus 
     {
-        cout<<MaximumPlus<<" ";
+        for(int i=MaximumPlus/2;i<n-(MaximumPlus/2);i++)
+            for(int j=MaximumPlus/2;j<n-(MaximumPlus/2);j++)
+            {
+                cout<<"inside the loop."<<endl;
+                bool verify=PlusVerifier(i,j,(MaximumPlus/2),grid);
+                cout<<"Bool verifier has worked."<<endl;
+                if (verify==true) return MaximumPlus/2 +1;
+            }
+
     }
+    return 0;
 
 }
 
 int main()
 {
     vector <vector<int>> mines={{4,2}};
-    orderOfLargestPlusSign(5,mines);
+    int x=orderOfLargestPlusSign(5,mines);
+    cout<<x;
 }
 
 
