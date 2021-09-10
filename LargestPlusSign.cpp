@@ -45,50 +45,27 @@ typedef long long ll;
 bool PlusVerifier(int x,int y,int PlusSize,vector <vector<int>>& grid)
 {
     bool up=true,down=true,left=true,right=true;
-    cout<<"Entering plusverifier function."<<x<<" "<<y<<" "<<" "<<PlusSize<<endl;
-    for(int i=x;i<=x+PlusSize;i++) 
-    {
-
+    for(int i=x;i<=x+PlusSize;i++)
         if(grid[i][y]==0) down=false;
-        
-    }
-        
-    cout<<"Loop one executed."<<endl;
     for(int i=x;i>x-PlusSize;i--)
-    {
         if(grid[i][y]==0) up=false;
-
-    }
-    cout<<"Loop two executed."<<endl;    
     for(int j=y;j<=y+PlusSize;j++)
         if(grid[x][j]==0) right=false;
-    cout<<"Loop three executed."<<endl;    
     for(int j=y;j>=y-PlusSize;j--)
         if(grid[x][j]==0) left=false;
-    cout<<"Loop four executed."<<endl;
     
-    cout<<" Plus verifier has been called and runed all loops."<<endl;
     return (up && down) && ( left && right);
     
 }
 int orderOfLargestPlusSign(int n, vector<vector<int>>& mines)
 {
     if(n<=2) return 0;  // if grid is lesser than 3 it's not possible to form a minimum plus which height is 3 
-    cout<<" function has been called."<<endl;
     // Grid initializing with all one's.
     vector<vector<int>> grid(n,vector<int>(n,1));
 
     // Editing zero's in the grid.
     for(int i=0;i<mines.size();i++)  grid[mines[i][0]][mines[i][1]]=0;
 
-    for(int i=0;i<n;i++)
-    {
-        for(int j=0;j<n;j++)
-        {
-            cout<<grid[i][j]<<" ";
-        }
-        cout<<endl;
-    }
     //Starting to point to search plus exist or not.
     int MaximumPlus=n;
     if(MaximumPlus%2==0) MaximumPlus=MaximumPlus-1;
@@ -98,12 +75,9 @@ int orderOfLargestPlusSign(int n, vector<vector<int>>& mines)
         for(int i=MaximumPlus/2;i<n-(MaximumPlus/2);i++)
             for(int j=MaximumPlus/2;j<n-(MaximumPlus/2);j++)
             {
-                cout<<"inside the loop."<<endl;
                 bool verify=PlusVerifier(i,j,(MaximumPlus/2),grid);
-                cout<<"Bool verifier has worked."<<endl;
                 if (verify==true) return MaximumPlus/2 +1;
             }
-
     }
     return 0;
 
