@@ -41,12 +41,30 @@ typedef long long ll;
 
 int orderOfLargestPlusSign(int n, vector<vector<int>>& mines)
 {
-        
+    if(n<=2) return 0;  // if grid is lesser than 3 it's not possible to form a minimum plus which height is 3 
+
+    int grid[n-1][n-1];
+    // Grid initializing with all one's.
+    for(int i=0;i<n;i++)
+        for(int j=0;j<n;j++)  grid[i][j]=1;  
+
+    // Editing zero's in the grid.
+    for(int i=0;i<mines.size();i++)  grid[mines[i][0]][mines[i][1]]=0;
+    
+    //Starting to point to search plus exist or not.
+    int MaximumPlus=n;
+    if(MaximumPlus%2==0) MaximumPlus-=1;
+    for(MaximumPlus;MaximumPlus>=3;MaximumPlus-=2) //this loops is resopnsible for the maximum plus 
+    {
+        cout<<MaximumPlus<<" ";
+    }
+
 }
 
 int main()
 {
-    
+    vector <vector<int>> mines={{4,2}};
+    orderOfLargestPlusSign(5,mines);
 }
 
 
